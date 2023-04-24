@@ -10,10 +10,8 @@ namespace CalculatorProgram
             bool endApp = false;
             bool backToMenu = true;
             bool useResultNumbers = false;
-            // Display title as the C# console calculator app.
             Console.WriteLine("Console Calculator in C#\r");
             Console.WriteLine("------------------------\n");
-
             Calculator calculator = new Calculator();
 
             while (!endApp)
@@ -24,19 +22,23 @@ namespace CalculatorProgram
                     Console.WriteLine("\tS - Start");
                     Console.WriteLine("\tR - Results");
                     Console.Write("Your option? ");
-
                     string option = Console.ReadLine();
 
                     if (option.ToLower() == "s")
                     {
                         backToMenu = false;
+                        useResultNumbers = false;
                         continue;
                     }
+
                     if (option.ToLower() == "r")
                     {
                         calculator.PrintResults();
-                        Console.Write("Press 'b' and Enter to return to the menu, press 'c' and Enter to clear the results, or press 'r' to use results for your number inputs\n");
+                        Console.Write("Press 'b' and Enter to return to the menu\n");
+                        Console.Write("Press 'c' and Enter to clear the results\n");
+                        Console.Write("Press 'r' and Enter to use these results for your number inputs, use the number in list for number to use in the calculator \n");
                         string input = Console.ReadLine();
+
                         if (input == "b")
                         {
                             continue;
@@ -46,56 +48,51 @@ namespace CalculatorProgram
                             calculator.ClearResults();
                         }
                         else if (input == "r")
-                        {
-                            Console.Write("choose numbers from list of results");
-                            if(calculator.results.Count >= 2)
+                        {                         
+                            if (calculator.results.Count >= 2)
                             {
+                                Console.Write("choose numbers from list of results");
                                 useResultNumbers = true;
                             }
                             else
                             {
-                                Console.Write("need more than two results");
+                                Console.Write("need more than two results\n");
                             }
                         }
-                        else if (option.ToLower() != "s" || option.ToLower() != "r")
-                        {
-                            Console.Write("choose Start or Results");
-                        }
+                    }
 
-
+                    if (option.ToLower() != "r" && option.ToLower() != "s")
+                    {
+                        Console.WriteLine("Invalid option. Please enter 'r' or 's'");
+                        continue;
                     }
                 }
 
                 if (!useResultNumbers)
                 {
-                    // Declare variables and set to empty.
                     string numInput1 = "";
                     string numInput2 = "";
                     double result = 0;
-
-                    // Ask the user to type the first number.
                     Console.Write("Type a number, and then press Enter: ");
                     numInput1 = Console.ReadLine();
-
                     double cleanNum1 = 0;
+
                     while (!double.TryParse(numInput1, out cleanNum1))
                     {
                         Console.Write("This is not valid input. Please enter an integer value: ");
                         numInput1 = Console.ReadLine();
                     }
 
-                    // Ask the user to type the second number.
                     Console.Write("Type another number, and then press Enter: ");
                     numInput2 = Console.ReadLine();
-
                     double cleanNum2 = 0;
+
                     while (!double.TryParse(numInput2, out cleanNum2))
                     {
                         Console.Write("This is not valid input. Please enter an integer value: ");
                         numInput2 = Console.ReadLine();
                     }
 
-                    // Ask the user to choose an operator.
                     Console.WriteLine("Choose an operator from the following list:");
                     Console.WriteLine("\ta - Add");
                     Console.WriteLine("\ts - Subtract");
@@ -125,77 +122,64 @@ namespace CalculatorProgram
                     {
                         Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
                     }
-
-                    // Wait for the user to respond before continuing.
-                    Console.Write("Press any key to continue");
-                    Console.ReadKey();
-                    Console.WriteLine("\n"); // Friendly linespacing.
                     timesUsed++;
                 }
-                // this uses so much on part above, should have better way to combine them
+
                 else
                 {
-                    // Declare variables and set to empty.
                     string numInput1 = "";
                     string numInput2 = "";
                     double result = 0;
-
-
-                    // Display the list of strings
                     Console.WriteLine("List of previous results:");
+
                     for (int i = 0; i < calculator.results.Count; i++)
                     {
                         Console.WriteLine("{0}: {1}", i + 1, calculator.results[i]);
                     }
 
-                    // Ask the user to choose the index of the result to use as the first number
                     Console.Write("Choose the index of the result to use as the first number: ");
                     string indexInput = Console.ReadLine();
-
                     int index = calculator.results.Count;
+
                     while (!int.TryParse(indexInput, out index) || index < 1 || index > calculator.results.Count)
                     {
                         Console.Write("Invalid input. Please enter a number between 1 and {0}: ", calculator.results.Count);
                         indexInput = Console.ReadLine();
                     }
 
-                    // Retrieve the chosen result string and convert it to a double
                     numInput1 = calculator.results[index - 1];
                     double cleanNum1 = 0;
                     while (!double.TryParse(numInput1, out cleanNum1))
+
                     {
                         Console.Write("This is not valid input. Please enter a number: ");
                         numInput1 = Console.ReadLine();
                     }
 
-                    // Display the list of strings
-                    //Console.WriteLine("List of previous results:");
                     for (int i = 0; i < calculator.results.Count; i++)
                     {
                         Console.WriteLine("{0}: {1}", i + 1, calculator.results[i]);
                     }
 
-                    // Ask the user to choose the index of the result to use as the first number
                     Console.Write("Choose the index of the result to use as the second number: ");
                     indexInput = Console.ReadLine();
-
                     index = 0;
+
                     while (!int.TryParse(indexInput, out index) || index < 1 || index > calculator.results.Count)
                     {
                         Console.Write("Invalid input. Please enter a number between 1 and {0}: ", calculator.results.Count);
                         indexInput = Console.ReadLine();
                     }
 
-                    // Retrieve the chosen result string and convert it to a double
                     numInput2 = calculator.results[index - 1];
                     double cleanNum2 = 0;
+
                     while (!double.TryParse(numInput2, out cleanNum2))
                     {
                         Console.Write("This is not valid input. Please enter a number: ");
                         numInput1 = Console.ReadLine();
                     }
 
-                    // Ask the user to choose an operator.
                     Console.WriteLine("Choose an operator from the following list:");
                     Console.WriteLine("\ta - Add");
                     Console.WriteLine("\ts - Subtract");
@@ -203,7 +187,6 @@ namespace CalculatorProgram
                     Console.WriteLine("\td - Divide");
                     Console.WriteLine("\tb - Back to Menu");
                     Console.Write("Your option? ");
-
                     string op = Console.ReadLine();
 
                     if (op.ToLower() == "b")
@@ -226,10 +209,6 @@ namespace CalculatorProgram
                         Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
                     }
 
-                    // Wait for the user to respond before continuing.
-                    Console.Write("Press any key to continue");
-                    Console.ReadKey();
-                    Console.WriteLine("\n"); // Friendly linespacing.
                     timesUsed++;
                     useResultNumbers = false;
                 }
@@ -239,7 +218,6 @@ namespace CalculatorProgram
             return;
         }
     }
-
 }
 
 
