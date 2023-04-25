@@ -34,14 +34,14 @@ namespace CalculatorProgram
                     if (option.ToLower() == "r")
                     {
                         calculator.PrintResults();
-                        Console.Write("Press 'b' and Enter to return to the menu\n");
+                        Console.Write("Press 's' and Enter to Start\n");
                         Console.Write("Press 'c' and Enter to clear the results\n");
                         Console.Write("Press 'r' and Enter to use these results for your number inputs, use the number in list for number to use in the calculator \n");
                         string input = Console.ReadLine();
 
-                        if (input == "b")
+                        if (input == "s")
                         {
-                            continue;
+                           // continue;
                         }
                         else if (input == "c")
                         {
@@ -59,11 +59,19 @@ namespace CalculatorProgram
                                 Console.Write("need more than two results\n");
                             }
                         }
+                        else
+                        {
+                            Console.WriteLine("Invalid option! Please Enter\n");
+                            Console.Write("Press 's' and Enter to Start\n");
+                            Console.Write("Press 'c' and Enter to clear the results\n");
+                            Console.Write("Press 'r' and Enter to use these results for your number inputs, use the number in list for number to use in the calculator \n");
+                            continue;
+                        }
                     }
-
+                       
                     if (option.ToLower() != "r" && option.ToLower() != "s")
                     {
-                        Console.WriteLine("Invalid option. Please enter 'r' or 's'");
+                        Console.WriteLine("Invalid option. Please enter 's' to Start or 'r' for Results");
                         continue;
                     }
                 }
